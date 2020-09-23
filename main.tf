@@ -38,9 +38,12 @@ resource "azurerm_container_group" "main" {
     image  = format("%s/%s:%s", var.container_registry_server, var.container_service_image, var.container_service_version)
     cpu    = var.container_cpu
     memory = var.container_memory
-    gpu {
-      count = element(var.container_gpu, 0)
-      sku   = element(var.container_gpu, 1)
+    dynamic "gpu" {
+      for_each = var.container_assign_gpu ? [1] : []
+      content {
+        count = element(var.container_gpu, 0)
+        sku   = element(var.container_gpu, 1)
+      }
     }
     dynamic "ports" {
       for_each = var.container_ports
@@ -60,15 +63,9 @@ resource "azurerm_container_group" "main" {
         share_name           = lookup(volume.value, "volume_share_name")
       }
     }
-    commands = var.container_commands
-    environment_variables = {
-      for e in var.container_environment_vars :
-      e.name => e.value
-    }
-    secure_environment_variables = {
-      for se in var.container_secure_environment_vars :
-      se.name => se.value
-    }
+    commands                     = var.container_commands
+    environment_variables        = var.container_environment_vars
+    secure_environment_variables = var.container_secure_environment_vars
     dynamic "readiness_probe" {
       for_each = var.container_readiness_probe_enabled ? [1] : []
       content {

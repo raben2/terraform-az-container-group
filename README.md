@@ -14,10 +14,12 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| container\_assign\_gpu | helper variable for dynamic gpu block | `bool` | `false` | no |
 | container\_commands | overwrite the docker entry point command | `list(string)` | `null` | no |
 | container\_cpu | Number of cpu cores assigned to the container | `number` | `1` | no |
-| container\_environment\_vars | Key value pairs to put into the environment | <pre>map(object({<br>    name  = string,<br>    value = string<br>  }))</pre> | <pre>{<br>  "e1": {<br>    "name": "",<br>    "value": ""<br>  }<br>}</pre> | no |
+| container\_environment\_vars | Key value pairs to put into the environment | `map(string)` | `{}` | no |
 | container\_gpu | gpu assignment for container (optional) first entry gpu # second sku | `list(string)` | <pre>[<br>  null<br>]</pre> | no |
+| container\_group\_assign\_identity | helper variable for identiy | `bool` | `false` | no |
 | container\_group\_dns\_name | DNS Label for the container group | `string` | `""` | no |
 | container\_group\_environment | Environment for deployment | `string` | `"develop"` | no |
 | container\_group\_identity\_ids | Assign identities (ids are only needed for type UserAssigned) | `list(string)` | `[]` | no |
@@ -58,7 +60,7 @@
 | container\_rp\_period | readiness probe period in seconds | `number` | `0` | no |
 | container\_rp\_success | readiness probe success threshold | `number` | `0` | no |
 | container\_rp\_timeout | readiness probe timeout in seconds | `number` | `0` | no |
-| container\_secure\_environment\_vars | Key value pairs to put into the secure environment | <pre>map(object({<br>    name  = string,<br>    value = string<br>  }))</pre> | <pre>{<br>  "se1": {<br>    "name": "",<br>    "value": ""<br>  }<br>}</pre> | no |
+| container\_secure\_environment\_vars | Key value pairs to put into the secure environment | `map(string)` | `{}` | no |
 | container\_service\_image | docker image to deploy | `string` | n/a | yes |
 | container\_service\_name | name of the service you want to deploy | `string` | n/a | yes |
 | container\_service\_version | version of the service image | `string` | `"latest"` | no |

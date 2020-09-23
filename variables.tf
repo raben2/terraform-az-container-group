@@ -130,10 +130,8 @@ variable "container_cpu" {
 }
 
 variable "container_gpu" {
-  type = list(string)
-  default = [
-    null
-  ]
+  type        = list(string)
+  default     = [null]
   description = "gpu assignment for container (optional) first entry gpu # second sku"
 }
 
@@ -268,30 +266,14 @@ variable "container_lp_timeout" {
 }
 
 variable "container_environment_vars" {
-  type = map(object({
-    name  = string,
-    value = string
-  }))
-  default = {
-    e1 = {
-      name  = "",
-      value = "",
-    }
-  }
+  type        = map(string)
+  default     = {}
   description = "Key value pairs to put into the environment"
 }
 
 variable "container_secure_environment_vars" {
-  type = map(object({
-    name  = string,
-    value = string
-  }))
-  default = {
-    se1 = {
-      name  = "",
-      value = "",
-    }
-  }
+  type        = map(string)
+  default     = {}
   description = "Key value pairs to put into the secure environment"
 }
 
@@ -309,4 +291,14 @@ variable "container_group_log_analytics_enabled" {
   type        = bool
   default     = false
   description = "helper variable for conditional diagnostics block"
+}
+variable "container_assign_gpu" {
+  type        = bool
+  default     = false
+  description = "helper variable for dynamic gpu block"
+}
+variable "container_group_assign_identity" {
+  type        = bool
+  default     = false
+  description = "helper variable for identiy"
 }
