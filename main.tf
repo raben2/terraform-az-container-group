@@ -49,12 +49,12 @@ resource "azurerm_container_group" "main" {
     dynamic "volume" {
       for_each = var.container_volumes
       content {
-        name                 = lookup(volume.value, "volume_name", null)
-        mount_path           = lookup(volume.value, "volume_mount_path", null)
-        read_only            = lookup(volume.value, "volume_ro", null)
-        storage_account_name = lookup(volume.value, "volume_storage_account_name", null)
-        storage_account_key  = lookup(volume.value, "volume_storage_account_key", null)
-        share_name           = lookup(volume.value, "volume_share_name", null)
+        name                 = lookup(volume.value, "volume_name")
+        mount_path           = lookup(volume.value, "volume_mount_path")
+        read_only            = lookup(volume.value, "volume_ro")
+        storage_account_name = lookup(volume.value, "volume_storage_account_name")
+        storage_account_key  = lookup(volume.value, "volume_storage_account_key")
+        share_name           = lookup(volume.value, "volume_share_name")
       }
     }
     commands = var.container_commands
