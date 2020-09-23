@@ -54,6 +54,7 @@ variable "container_group_log_analytics" {
 }
 variable "container_group_log_metadata" {
   type        = map(string)
+  default     = { m1 = "" }
   description = "additional log metadata"
 }
 
@@ -84,13 +85,11 @@ variable "container_group_tags" {
 
 variable "container_service_name" {
   type        = string
-  default     = "test"
   description = "name of the service you want to deploy"
 }
 
 variable "container_service_image" {
   type        = string
-  default     = "alpine"
   description = "docker image to deploy"
 }
 variable "container_service_version" {
