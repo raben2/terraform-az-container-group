@@ -22,12 +22,15 @@ resource "azurerm_container_group" "main" {
     password = var.container_registry_password
     server   = var.container_registry_server
   }
-  diagnostics {
-    log_analytics {
-      log_type      = element(var.container_group_log_analytics, 0)
-      workspace_id  = element(var.container_group_log_analytics, 1)
-      workspace_key = element(var.container_group_log_analytics, 2)
-      metadata      = var.container_group_log_metadata
+  dynamic "diagnostics" {
+    for_each = var.container_group_log_analytics_enabled ? [1] : []
+    content {
+      log_analytics {
+        log_type      = element(var.container_group_log_analytics, 0)
+        workspace_id  = element(var.container_group_log_analytics, 1)
+        workspace_key = element(var.container_group_log_analytics, 2)
+        metadata      = var.container_group_log_metadata
+      }
     }
   }
   container {
@@ -66,32 +69,38 @@ resource "azurerm_container_group" "main" {
       for se in var.container_secure_environment_vars :
       se.name => se.value
     }
-    readiness_probe {
-      exec                  = var.container_rp_exec
-      initial_delay_seconds = var.container_rp_init_seconds
-      period_seconds        = var.container_rp_period
-      failure_threshold     = var.container_rp_failure
-      success_threshold     = var.container_rp_success
-      timeout_seconds       = var.container_rp_timeout
-      http_get {
-        path   = var.container_rp_http_get_path
-        port   = var.container_rp_http_get_port
-        scheme = var.container_rp_http_get_scheme
+    dynamic "readiness_probe" {
+      for_each = var.container_readiness_probe_enabled ? [1] : []
+      content {
+        exec                  = var.container_rp_exec
+        initial_delay_seconds = var.container_rp_init_seconds
+        period_seconds        = var.container_rp_period
+        failure_threshold     = var.container_rp_failure
+        success_threshold     = var.container_rp_success
+        timeout_seconds       = var.container_rp_timeout
+        http_get {
+          path   = var.container_rp_http_get_path
+          port   = var.container_rp_http_get_port
+          scheme = var.container_rp_http_get_scheme
 
+        }
       }
     }
-    liveness_probe {
-      exec                  = var.container_lp_exec
-      initial_delay_seconds = var.container_lp_init_seconds
-      period_seconds        = var.container_lp_period
-      failure_threshold     = var.container_lp_failure
-      success_threshold     = var.container_lp_success
-      timeout_seconds       = var.container_lp_timeout
-      http_get {
-        path   = var.container_lp_http_get_path
-        port   = var.container_lp_http_get_port
-        scheme = var.container_lp_http_get_scheme
+    dynamic "liveness_probe" {
+      for_each = var.container_liveness_probe_enabled ? [1] : []
+      content {
+        exec                  = var.container_lp_exec
+        initial_delay_seconds = var.container_lp_init_seconds
+        period_seconds        = var.container_lp_period
+        failure_threshold     = var.container_lp_failure
+        success_threshold     = var.container_lp_success
+        timeout_seconds       = var.container_lp_timeout
+        http_get {
+          path   = var.container_lp_http_get_path
+          port   = var.container_lp_http_get_port
+          scheme = var.container_lp_http_get_scheme
 
+        }
       }
     }
   }

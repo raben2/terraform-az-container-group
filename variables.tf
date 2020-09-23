@@ -31,7 +31,7 @@ variable "container_group_ip_type" {
 
 variable "container_group_network_profile" {
   type        = string
-  default     = ""
+  default     = null
   description = "Azure Network profile ID"
 }
 
@@ -49,7 +49,7 @@ variable "container_group_restart_policy" {
 
 variable "container_group_log_analytics" {
   type        = list(string)
-  default     = [null]
+  default     = null
   description = "extended logging configuration 1 = log_type, 2 workspace_id, 3 = workspace_key"
 }
 variable "container_group_log_metadata" {
@@ -170,7 +170,7 @@ variable "container_volumes" {
 }
 variable "container_commands" {
   type        = list(string)
-  default     = [""]
+  default     = null
   description = "overwrite the docker entry point command"
 }
 
@@ -208,7 +208,7 @@ variable "container_lp_http_get_scheme" {
 
 variable "container_rp_exec" {
   type        = list(string)
-  default     = [""]
+  default     = null
   description = "readiness probe exec command"
 }
 variable "container_rp_init_seconds" {
@@ -238,7 +238,7 @@ variable "container_rp_timeout" {
 }
 variable "container_lp_exec" {
   type        = list(string)
-  default     = [""]
+  default     = null
   description = "liveness probe exec command"
 }
 variable "container_lp_init_seconds" {
@@ -295,3 +295,18 @@ variable "container_secure_environment_vars" {
   description = "Key value pairs to put into the secure environment"
 }
 
+variable "container_liveness_probe_enabled" {
+  type        = bool
+  default     = false
+  description = "helper variable for conditional liveness block"
+}
+variable "container_readiness_probe_enabled" {
+  type        = bool
+  default     = false
+  description = "helper variable for conditional readiness block"
+}
+variable "container_group_log_analytics_enabled" {
+  type        = bool
+  default     = false
+  description = "helper variable for conditional diagnostics block"
+}
