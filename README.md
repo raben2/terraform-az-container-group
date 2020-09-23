@@ -60,6 +60,7 @@
 | container\_service\_name | name of the service you want to deploy | `string` | n/a | yes |
 | container\_service\_version | version of the service image | `string` | `"latest"` | no |
 | container\_volumes | volume mount (optional) | <pre>map(object({<br>    volume_name                 = string,<br>    volume_mount_path           = string,<br>    volume_ro                   = bool,<br>    volume_storage_account_name = string,<br>    volume_storage_account_key  = string,<br>    volume_share_name           = string<br>  }))</pre> | <pre>{<br>  "vol1": null<br>}</pre> | no |
+| container\_volumes\_enabled | helper variable for conditional block | `bool` | `false` | no |
 
 ## Outputs
 

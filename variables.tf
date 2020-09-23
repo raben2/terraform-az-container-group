@@ -149,6 +149,11 @@ variable "container_ports" {
     }
   }
 }
+variable "container_volumes_enabled" {
+  type        = bool
+  default     = false
+  description = "helper variable for conditional block"
+}
 variable "container_volumes" {
   type = map(object({
     volume_name                 = string,

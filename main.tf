@@ -47,7 +47,7 @@ resource "azurerm_container_group" "main" {
       }
     }
     dynamic "volume" {
-      for_each = var.container_volumes ? [] : [1]
+      count = var.container_volumes_enabled ? [] : 1
       content {
         name                 = lookup(volume.value, "volume_name")
         mount_path           = lookup(volume.value, "volume_mount_path")
