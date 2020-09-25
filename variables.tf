@@ -5,7 +5,7 @@ variable "container_group_name" {
 }
 variable "container_group_dns_name" {
   type        = string
-  default     = ""
+  default     = null
   description = "DNS Label for the container group"
 }
 variable "container_group_location" {
