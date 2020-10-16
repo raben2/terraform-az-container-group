@@ -1,12 +1,3 @@
-provider "azurerm" {
-  version = "~> 2.29.0"
-  features {
-    key_vault {
-      purge_soft_delete_on_destroy = true
-    }
-  }
-}
-
 resource "azurerm_container_group" "main" {
   name                = format("%s-%s", var.container_group_name, var.container_group_environment)
   location            = var.container_group_location
