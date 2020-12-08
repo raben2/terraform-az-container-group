@@ -54,7 +54,7 @@ variable "container_group_log_analytics" {
 }
 variable "container_group_log_metadata" {
   type        = map(string)
-  default     = { m1 = "" }
+  default     = null
   description = "additional log metadata"
 }
 
