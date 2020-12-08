@@ -20,7 +20,6 @@ resource "azurerm_container_group" "main" {
         log_type      = element(var.container_group_log_analytics, 0)
         workspace_id  = element(var.container_group_log_analytics, 1)
         workspace_key = element(var.container_group_log_analytics, 2)
-        metadata      = var.container_group_log_metadata
       }
     }
   }
